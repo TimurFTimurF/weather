@@ -1,0 +1,10 @@
+    cd docker
+
+installing:
+    docker-compose up
+
+starting:
+    docker start $(docker ps -aq)
+
+executing commands:
+    docker exec -it web bash

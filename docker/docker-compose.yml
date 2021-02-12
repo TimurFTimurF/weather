@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  web:
+    build: ./web
+    container_name: web
+    restart: always
+    environment:
+      - APACHE_RUN_USER=#1000
+      - APACHE_SERVER_NAME=buffer
+      - APP_PATH_CONTAINER=/var/www/html/
+    volumes:
+      - ../:/var/www/html/
+    ports:
+      - 8080:80
+    working_dir: /var/www/html/
