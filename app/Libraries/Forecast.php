@@ -43,12 +43,12 @@ class Forecast
 
                 if (
                     (is_array($weather) && (array_keys($weather)[0] != 'error'))
-                    && ($weather != 'De Wallen')                                    //TODO
+                    && ($weather != 'De Wallen')                                    //TODO Change checking according real returned data
                 ) {
                     $response = "{$city['name']} | {$weather['today']} - {$weather['tomorrow']}";
 
                     $this->out->iteration($response);
-                } else {            //TODO Just for test functionality while weather API is not working
+                } else {            //TODO Delete! Now Just for test functionality while weather API is not working
                     $response = "{$city['name']} | Test forecast for today - Test forecast for tomorrow";
 
                     $this->out->iteration($response);
