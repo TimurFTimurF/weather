@@ -5,7 +5,7 @@
 
 ---
 
-#Way to up the project
+# Way to up the project
 1. You have to have php and composer on your local machine  
     - execute:
         - composer install  
@@ -74,6 +74,8 @@ Paste url address below in your browser
 ```
     
 **GET /api/v3/forecast/{city_id}/{day}**  
+  - considering that day is enum value of today or tomorrow
+
 ```
 "responses": {  
     "200": {
@@ -82,7 +84,7 @@ Paste url address below in your browser
             "application/json": {            
                 "name" : "London",
                 "city_id" : 1,
-                "day" : "2021-01-01",
+                "day" : "today",
                 "forecast" : "Heavy rain",
                 "time" : "2021-01-01 12:00:00"
             }
@@ -103,7 +105,7 @@ Paste url address below in your browser
             "application/json": {            
                 "name" : "London",
                 "city_id" : 1,
-                "day" : "2021-01-01",
+                "day" : "today",
                 "forecast" : "Heavy rain",
                 "time" : "2021-01-01 12:00:00"
             }
@@ -124,7 +126,7 @@ Paste url address below in your browser
             "application/json": {            
                 "name" : "London",
                 "city_id" : 1,
-                "day" : "2021-01-01",
+                "day" : "tomorrow",
                 "forecast" : "Partly cloudy",
                 "time" : "2021-01-01 12:00:00"
             }

@@ -42,14 +42,14 @@ class Forecast
                 $weather = Http::get($url)->json();
 
                 if (
-                    (is_array($weather) && (array_keys($weather)[0] != 'error'))    //TODO
+                    (is_array($weather) && (array_keys($weather)[0] != 'error'))
                     && ($weather != 'De Wallen')                                    //TODO
                 ) {
                     $response = "{$city['name']} | {$weather['today']} - {$weather['tomorrow']}";
 
                     $this->out->iteration($response);
-                } else { //TODO Just for test functionality while weather API is not working
-                    $response = "{$city['name']} | Test today - Test tomorrow";
+                } else {            //TODO Just for test functionality while weather API is not working
+                    $response = "{$city['name']} | Test forecast for today - Test forecast for tomorrow";
 
                     $this->out->iteration($response);
                 }
