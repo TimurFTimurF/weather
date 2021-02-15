@@ -3,7 +3,9 @@
 namespace App\Libraries;
 
 use App\Interfaces\WayOutInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class Forecast
 {
@@ -41,17 +43,31 @@ class Forecast
 
                 $weather = Http::get($url)->json();
 
-                if (
-                    (is_array($weather) && (array_keys($weather)[0] != 'error'))
-                    && ($weather != 'De Wallen')                                    //TODO Change checking according real returned data
-                ) {
-                    $response = "{$city['name']} | {$weather['today']} - {$weather['tomorrow']}";
+                if (is_array($weather) && (array_keys($weather)[0] != 'error')) {
+                    $date = Carbon::now()->format('Y-m-d');
+                    try {
+                        if ($date == $weather['forecast']['forecastday'][0]['date']) {
+                            $today = $weather['forecast']['forecastday'][0]['day']['condition']['text'];
+                        }
+                    } catch (\Exception $e) {
+                        $today = '';
+                        Log::warning('Undefined forecast for city ' . $city['name'] . ' at ' . $date);
+                    }
+
+                    $date = Carbon::now()->addDay()->format('Y-m-d');
+                    try {
+                        if ($date == $weather['forecast']['forecastday'][1]['date']) {
+                            $tomorrow = $weather['forecast']['forecastday'][1]['day']['condition']['text'];
+                        }
+                    } catch (\Exception $e) {
+                        $tomorrow = '';
+                        Log::warning('Undefined forecast for city ' . $city['name'] . ' at ' . $date);
+                    }
+                    $response = "{$city['name']} | $today - $tomorrow";
 
                     $this->out->iteration($response);
-                } else {            //TODO Delete! Now Just for test functionality while weather API is not working
-                    $response = "{$city['name']} | Test forecast for today - Test forecast for tomorrow";
-
-                    $this->out->iteration($response);
+                } else {
+                    Log::error('Undefined forecast for city ' . $city['name']);
                 }
             }
         }
